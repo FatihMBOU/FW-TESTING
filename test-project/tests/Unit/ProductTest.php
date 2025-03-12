@@ -1,14 +1,16 @@
 <?php
 
-use Tests\TestCase;
+namespace Tests\Unit;
+
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_aangemaakt()
     {
         $product = Product::create([
@@ -16,31 +18,47 @@ class ProductTest extends TestCase
             'price' => 9.99,
         ]);
 
-        $this->assertDatabaseHas('products', ['name' => 'Test Product']);
+        $this->assertDatabaseHas('products', [
+            'name' => 'Test Product',
+            'price' => 9.99,
+        ]);
     }
 
-    /** @test */
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_gelezen()
     {
         $product = Product::factory()->create();
-        $this->assertNotNull(Product::find($product->id));
+
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+        ]);
     }
 
-    /** @test */
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_bijgewerkt()
     {
         $product = Product::factory()->create();
-        $product->update(['price' => 19.99]);
 
-        $this->assertDatabaseHas('products', ['id' => $product->id, 'price' => 19.99]);
+        $product->update([
+            'name' => 'Updated Product',
+            'price' => 19.99,
+        ]);
+
+        $this->assertDatabaseHas('products', [
+            'name' => 'Updated Product',
+            'price' => 19.99,
+        ]);
     }
 
-    /** @test */
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_verwijderd()
     {
         $product = Product::factory()->create();
+
         $product->delete();
 
-        $this->assertDatabaseMissing('products', ['id' => $product->id]);
+        $this->assertDatabaseMissing('products', [
+            'id' => $product->id,
+        ]);
     }
 }

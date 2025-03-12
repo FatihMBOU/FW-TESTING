@@ -10,7 +10,7 @@ class ProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[Test]
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_aangemaakt()
     {
         $product = Product::create([
@@ -24,7 +24,7 @@ class ProductTest extends TestCase
         ]);
     }
 
-    #[Test]
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_gelezen()
     {
         $product = Product::factory()->create();
@@ -34,7 +34,7 @@ class ProductTest extends TestCase
         ]);
     }
 
-    #[Test]
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_bijgewerkt()
     {
         $product = Product::factory()->create();
@@ -50,7 +50,7 @@ class ProductTest extends TestCase
         ]);
     }
 
-    #[Test]
+    #[\Pest\Attributes\Test]
     public function een_product_kan_worden_verwijderd()
     {
         $product = Product::factory()->create();
